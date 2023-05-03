@@ -4,6 +4,12 @@ const fs = require('fs')
 let app = express();
 let movies = JSON.parse(fs.readFileSync('./data/movies.json'))
 
+// middelware 
+app.use((req,res,next)=>{
+    req.requestedAt = new Date().toDateString();
+    next();
+})
+
 // JSON.parse = converts the json data into a JavaScript object
 
 // GET-MOVIES:
@@ -11,6 +17,7 @@ let movies = JSON.parse(fs.readFileSync('./data/movies.json'))
 app.get('/api/get_movies',(req,resp)=>{
     resp.status(200).json({
         status :"success",
+        requestedAt : req.requestedAt,
         count: movies.length,
         data : {
             movies:movies
@@ -27,12 +34,13 @@ app.use(express.json())
 
 app.post('/api/post_movies',(req,resp)=>{
    
-    const new_id = movies[movies.length-1].id + 1;
-    const newmovie = Object.assign({id:new_id},req.body)
+    const new_id = movies[movies.length-1].id + 1;        // i movies[] length is 5,then there are 4 movies
+    const newmovie = Object.assign({id:new_id},req.body)  // assigning the new_id and the post request ka body  to the new_movie
     movies.push(newmovie)
-    fs.writeFile('./data/movies.json',JSON.stringify(movies),(err)=>{
+    fs.writeFile('./data/movies.json',JSON.stringify(movies),(err)=>{    // adding to the movies.json file
         resp.status(201).json({
             status:"success",
+            requestedAt : req.requestedAt,
             data:{
                 movies:newmovie
             }
@@ -61,6 +69,7 @@ app.get('/api/get_movies/:id',(req,resp)=>{
     // sending response of that movie with particular id
     resp.status(200).json({
         status:"success",
+        requestedAt : req.requestedAt,
         data:{
             movie:movie
         }

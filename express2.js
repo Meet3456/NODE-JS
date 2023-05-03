@@ -29,7 +29,7 @@ app.get('/about',(req,resp)=>{
     resp.send("Hello , Welcome to About page")    
 })
 
-//created with route.get -> reFilter will be applied only on this route
+//created with route.get -> reFilter will be applied only on this route(middelware)
 route.get('/users',(req,resp)=>{
     resp.send("Hello , Welcome to Users page")
 })
