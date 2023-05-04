@@ -2,8 +2,7 @@ const express = require('express')
 const fs = require('fs')
 
 let app = express();
-let movies = JSON.parse(fs.readFileSync('./data/movies.json'))
-
+ 
 // middelware 
 app.use((req,res,next)=>{
     req.requestedAt = new Date().toDateString();

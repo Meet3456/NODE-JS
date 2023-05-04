@@ -22,3 +22,6 @@ app.get('/api/get_movies',(req,resp)=>{
 
 app.listen(5000)
 
+
+// THIS MIDDELWARE IS USED TO SERVE STATIC FILES PRESENT IN A FOLDER"
+// app.use(express.static({folder-path}));
